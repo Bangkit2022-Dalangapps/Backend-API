@@ -6,7 +6,7 @@ export const getStories = async(req, res)=>{
     try {
         const response = await Stories.findAll();
         res.status(200).json({
-            status : res.statusCode,
+            error: "false",
             msg : "Success",
             data : response
         });
@@ -23,7 +23,7 @@ export const getStoriesById = async(req, res)=>{
             }
         });
         res.status(200).json({
-            status : res.statusCode,
+            error: "false",
             msg : "Success",
             data : response
         });
@@ -33,7 +33,10 @@ export const getStoriesById = async(req, res)=>{
 }
 
 export const saveStories = (req, res)=>{
-    if(req.files === null) return res.status(400).json({msg: "No Stories Uploaded"});
+    if(req.files === null) return res.status(400).json({
+        error: "true",
+        msg: "No Stories Uploaded"});
+
     const title = req.body.title;
     const description = req.body.description;
     const file = req.files.file;
@@ -43,14 +46,21 @@ export const saveStories = (req, res)=>{
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     const allowedType = ['.png','.jpg','.jpeg'];
 
-    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-    if(fileSize > 5000000) return res.status(422).json({msg: "Image must be less than 5 MB"});
+    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({
+        error: "true",
+        msg: "Invalid Images"});
+
+    if(fileSize > 5000000) return res.status(422).json({
+        error:"true",
+        msg: "Image must be less than 5 MB"});
 
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
             await Articles.create({title: title, image: fileName, description: description, url: url});
-            res.status(201).json({msg: "Stories Created Successfuly"});
+            res.status(201).json({
+                error: "false",
+                msg: "Stories Created Successfuly"});
         } catch (error) {
             console.log(error.message);
         }
@@ -64,7 +74,10 @@ export const updateStories = async(req, res)=>{
             id : req.params.id
         }
     });
-    if(!stories) return res.status(404).json({msg: "No Stories Found"});
+
+    if(!stories) return res.status(404).json({
+        error: "true",
+        msg: "No Stories Found"});
     
     let fileName = "";
     if(req.files === null){
@@ -76,14 +89,21 @@ export const updateStories = async(req, res)=>{
         fileName = file.md5 + ext;
         const allowedType = ['.png','.jpg','.jpeg'];
 
-        if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-        if(fileSize > 5000000) return res.status(422).json({msg: "Image must be less than 5 MB"});
+        if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({
+            error: "true",
+            msg: "Invalid Images"});
+
+        if(fileSize > 5000000) return res.status(422).json({
+            error: "true",
+            msg: "Image must be less than 5 MB"});
 
         const filepath = `./public/images/${stories.image}`;
         fs.unlinkSync(filepath);
 
         file.mv(`./public/images/${fileName}`, (err)=>{
-            if(err) return res.status(500).json({msg: err.message});
+            if(err) return res.status(500).json({
+                error: "true",
+                msg: err.message});
         });
     }
     const title = req.body.title;
@@ -95,7 +115,9 @@ export const updateStories = async(req, res)=>{
                 id: req.params.id
             }
         });
-        res.status(200).json({msg: "Stories Updated Successfuly"});
+        res.status(200).json({
+            error: "false",
+            msg: "Stories Updated Successfuly"});
     } catch (error) {
         console.log(error.message);
     }
@@ -107,7 +129,10 @@ export const deleteStories = async(req, res)=>{
             id : req.params.id
         }
     });
-    if(!stories) return res.status(404).json({msg: "No Stories Found"});
+
+    if(!stories) return res.status(404).json({
+        error: "true",
+        msg: "No Stories Found"});
 
     try {
         const filepath = `./public/images/${stories.image}`;
@@ -117,7 +142,9 @@ export const deleteStories = async(req, res)=>{
                 id : req.params.id
             }
         });
-        res.status(200).json({msg: "Stories Deleted Successfuly"});
+        res.status(200).json({
+            error: "false",
+            msg: "Stories Deleted Successfuly"});
     } catch (error) {
         console.log(error.message);
     }

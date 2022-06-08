@@ -2,6 +2,23 @@ import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+export const getToken = async (req, res, next) => {
+    const {
+        token
+    } = req.body
+    const tokenExist = await Users.findOne({
+        where: {
+            refresh_token: token
+        }
+    })
+
+    if (!tokenExist) return res.status(403).json({
+        error: "true",
+        message: "Unauthorized",
+    });
+    next();
+}
+
 export const getUsers = async(req, res) => {
     try {
         const users = await Users.findAll({
@@ -40,7 +57,9 @@ export const Login = async(req, res) => {
             }
         })
         const match = await bcrypt.compare(req.body.password, user[0].password);
-        if(!match) return res.status(400).json({msg: "Wrong password"});
+        if(!match) return res.status(400).json({
+            error: "true",
+            msg: "Wrong password"});
         const userId = user[0].id;
         const name = user[0].name;
         const email = user[0].email;

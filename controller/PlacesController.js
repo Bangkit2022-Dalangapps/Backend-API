@@ -6,7 +6,7 @@ export const getPlaces = async(req, res)=>{
     try {
         const response = await Places.findAll();
         res.status(200).json({
-            status : res.statusCode,
+            error: "false",
             msg : "Success",
             data : response
         });
@@ -23,7 +23,7 @@ export const getPlacesById = async(req, res)=>{
             }
         });
         res.status(200).json({
-            status : res.statusCode,
+            error: "false",
             msg : "Success",
             data : response
         });
@@ -33,7 +33,10 @@ export const getPlacesById = async(req, res)=>{
 }
 
 export const savePlaces = (req, res)=>{
-    if(req.files === null) return res.status(400).json({msg: "No Places Uploaded"});
+    if(req.files === null) return res.status(400).json({
+        error: "true",
+        msg: "No Places Uploaded"});
+
     const name = req.body.name;
     const description = req.body.description;
     const file = req.files.file;
@@ -43,14 +46,21 @@ export const savePlaces = (req, res)=>{
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     const allowedType = ['.png','.jpg','.jpeg'];
 
-    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-    if(fileSize > 5000000) return res.status(422).json({msg: "Image must be less than 5 MB"});
+    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({
+        error: "true",
+        msg: "Invalid Images"});
+
+    if(fileSize > 5000000) return res.status(422).json({
+        error: "true",
+        msg: "Image must be less than 5 MB"});
 
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
             await Places.create({name: name, image: fileName, description: description, url: url});
-            res.status(201).json({msg: "Place Created Successfuly"});
+            res.status(201).json({
+                error: "false",
+                msg: "Place Created Successfuly"});
         } catch (error) {
             console.log(error.message);
         }
@@ -64,7 +74,10 @@ export const updatePlaces = async(req, res)=>{
             id : req.params.id
         }
     });
-    if(!places) return res.status(404).json({msg: "No Place Found"});
+
+    if(!places) return res.status(404).json({
+        error: "true",
+        msg: "No Place Found"});
     
     let fileName = "";
     if(req.files === null){
@@ -76,8 +89,13 @@ export const updatePlaces = async(req, res)=>{
         fileName = file.md5 + ext;
         const allowedType = ['.png','.jpg','.jpeg'];
 
-        if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-        if(fileSize > 5000000) return res.status(422).json({msg: "Image must be less than 5 MB"});
+        if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({
+            error: "true",
+            msg: "Invalid Images"});
+
+        if(fileSize > 5000000) return res.status(422).json({
+            error: "true",
+            msg: "Image must be less than 5 MB"});
 
         const filepath = `./public/images/${places.image}`;
         fs.unlinkSync(filepath);
@@ -95,7 +113,9 @@ export const updatePlaces = async(req, res)=>{
                 id: req.params.id
             }
         });
-        res.status(200).json({msg: "Place Updated Successfuly"});
+        res.status(200).json({
+            error: "false",
+            msg: "Place Updated Successfuly"});
     } catch (error) {
         console.log(error.message);
     }
@@ -107,7 +127,10 @@ export const deletePlaces = async(req, res)=>{
             id : req.params.id
         }
     });
-    if(!places) return res.status(404).json({msg: "No Place Found"});
+
+    if(!places) return res.status(404).json({
+        error: "true",
+        msg: "No Place Found"});
 
     try {
         const filepath = `./public/images/${places.image}`;
@@ -117,7 +140,9 @@ export const deletePlaces = async(req, res)=>{
                 id : req.params.id
             }
         });
-        res.status(200).json({msg: "Place Deleted Successfuly"});
+        res.status(200).json({
+            error: "false",
+            msg: "Place Deleted Successfuly"});
     } catch (error) {
         console.log(error.message);
     }

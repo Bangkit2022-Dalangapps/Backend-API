@@ -6,7 +6,7 @@ export const getDalang = async(req, res)=>{
     try {
         const response = await Dalang.findAll();
         res.status(200).json({
-            status : res.statusCode,
+            error: "false",
             msg : "Success",
             data : response
         });
@@ -23,7 +23,7 @@ export const getDalangById = async(req, res)=>{
             }
         });
         res.status(200).json({
-            status : res.statusCode,
+            error: "false",
             msg : "Success",
             data : response
         });
@@ -33,7 +33,10 @@ export const getDalangById = async(req, res)=>{
 }
 
 export const saveDalang = (req, res)=>{
-    if(req.files === null) return res.status(400).json({msg: "No Dalang Uploaded"});
+    if(req.files === null) return res.status(400).json({
+        error: "true",
+        msg: "No Dalang Uploaded"});
+
     const name = req.body.name;
     const biography = req.body.biography;
     const file = req.files.file;
@@ -43,14 +46,21 @@ export const saveDalang = (req, res)=>{
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     const allowedType = ['.png','.jpg','.jpeg'];
 
-    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-    if(fileSize > 5000000) return res.status(422).json({msg: "Image must be less than 5 MB"});
+    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({
+        error: "true",
+        msg: "Invalid Images"});
+
+    if(fileSize > 5000000) return res.status(422).json({
+        error: "true",
+        msg: "Image must be less than 5 MB"});
 
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
             await Dalang.create({name: name, image: fileName, biography: biography, url: url});
-            res.status(201).json({msg: "Dalang Created Successfuly"});
+            res.status(201).json({
+                error: "false",
+                msg: "Dalang Created Successfuly"});
         } catch (error) {
             console.log(error.message);
         }
@@ -64,7 +74,10 @@ export const updateDalang = async(req, res)=>{
             id : req.params.id
         }
     });
-    if(!dalang) return res.status(404).json({msg: "No Dalang Found"});
+
+    if(!dalang) return res.status(404).json({
+        error: "true",
+        msg: "No Dalang Found"});
     
     let fileName = "";
     if(req.files === null){
@@ -76,14 +89,21 @@ export const updateDalang = async(req, res)=>{
         fileName = file.md5 + ext;
         const allowedType = ['.png','.jpg','.jpeg'];
 
-        if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-        if(fileSize > 5000000) return res.status(422).json({msg: "Image must be less than 5 MB"});
+        if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({
+            error: "true",
+            msg: "Invalid Images"});
+
+        if(fileSize > 5000000) return res.status(422).json({
+            error: "true",
+            msg: "Image must be less than 5 MB"});
 
         const filepath = `./public/images/${dalang.image}`;
         fs.unlinkSync(filepath);
 
         file.mv(`./public/images/${fileName}`, (err)=>{
-            if(err) return res.status(500).json({msg: err.message});
+            if(err) return res.status(500).json({
+                error: "true",
+                msg: err.message});
         });
     }
     const name = req.body.name;
@@ -95,7 +115,9 @@ export const updateDalang = async(req, res)=>{
                 id: req.params.id
             }
         });
-        res.status(200).json({msg: "Dalang Updated Successfuly"});
+        res.status(200).json({
+            error: "false",
+            msg: "Dalang Updated Successfuly"});
     } catch (error) {
         console.log(error.message);
     }
@@ -107,7 +129,10 @@ export const deleteDalang = async(req, res)=>{
             id : req.params.id
         }
     });
-    if(!dalang) return res.status(404).json({msg: "No Dalang Found"});
+
+    if(!dalang) return res.status(404).json({
+        error: "true",
+        msg: "No Dalang Found"});
 
     try {
         const filepath = `./public/images/${dalang.image}`;
@@ -117,7 +142,9 @@ export const deleteDalang = async(req, res)=>{
                 id : req.params.id
             }
         });
-        res.status(200).json({msg: "Dalang Deleted Successfuly"});
+        res.status(200).json({
+            error: "false",
+            msg: "Dalang Deleted Successfuly"});
     } catch (error) {
         console.log(error.message);
     }
