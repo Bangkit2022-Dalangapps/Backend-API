@@ -19,6 +19,7 @@ try {
 }
 
 app.use(cors({credential: true, origin:'*'}));
+app.use(express.static("public"))
 app.use(cookieParser());
 app.use(express.json());
 app.use(FileUpload());
