@@ -2,23 +2,6 @@ import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export const getToken = async (req, res, next) => {
-    const {
-        token
-    } = req.body
-    const tokenExist = await Users.findOne({
-        where: {
-            refresh_token: token
-        }
-    })
-
-    if (!tokenExist) return res.status(403).json({
-        error: "true",
-        message: "Unauthorized",
-    });
-    next();
-}
-
 export const getUsers = async(req, res) => {
     try {
         const users = await Users.findAll({
