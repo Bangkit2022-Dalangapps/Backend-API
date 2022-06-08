@@ -6,7 +6,7 @@ const {DataTypes} = Sequelize;
 const Wayang = db.define('wayang',{
     name: DataTypes.STRING,
     image: DataTypes.STRING,
-    description : DataTypes.STRING,
+    description : DataTypes.TEXT,
     url: DataTypes.STRING
 },{
     freezeTableName: true
