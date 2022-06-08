@@ -54,7 +54,7 @@ export const saveArticles = (req, res)=>{
         error: "true",
         msg: "Image must be less than 5 MB"});
 
-    file.mv(`./public/images/${fileName}`, async(err)=>{
+    file.mv(`/public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
             await Articles.create({title: title, image: fileName, description: description, url: url});
