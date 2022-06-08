@@ -18,38 +18,38 @@ router.get('/token', refreshToken);
 router.delete('/logout', Logout);
 
 //Article Content
-router.get('/Articles', verifyToken, getArticles);
-router.get('/Articles/:id', verifyToken, getArticlesById);
-router.post('/Articles', verifyToken, saveArticles);
-router.patch('/Articles/:id', verifyToken, updateArticles);
-router.delete('/Articles/:id', verifyToken, deleteArticles);
+router.get('/Articles', getArticles);
+router.get('/Articles/:id', getArticlesById);
+router.post('/Articles', saveArticles);
+router.patch('/Articles/:id', updateArticles);
+router.delete('/Articles/:id', deleteArticles);
 
 //Dalang Biography Content
-router.get('/Dalang', verifyToken, getDalang);
-router.get('/Dalang/:id', verifyToken, getDalangById);
-router.post('/Dalang', verifyToken,saveDalang);
-router.patch('/Dalang/:id', verifyToken,updateDalang);
-router.delete('/Dalang/:id', verifyToken,deleteDalang);
+router.get('/Dalang', getDalang);
+router.get('/Dalang/:id', getDalangById);
+router.post('/Dalang', saveDalang);
+router.patch('/Dalang/:id', updateDalang);
+router.delete('/Dalang/:id', deleteDalang);
 
 //Place Content
-router.get('/Places', verifyToken, getPlaces);
-router.get('/Places/:id', verifyToken, getPlacesById);
-router.post('/Places', verifyToken, savePlaces);
-router.patch('/Places/:id', verifyToken, updatePlaces);
-router.delete('/Places/:id', verifyToken, deletePlaces);
+router.get('/Places', getPlaces);
+router.get('/Places/:id', getPlacesById);
+router.post('/Places', savePlaces);
+router.patch('/Places/:id', updatePlaces);
+router.delete('/Places/:id', deletePlaces);
 
 //Stories of Puppet Content
-router.get('/Stories', verifyToken, getStories);
-router.get('/Stories/:id', verifyToken, getStoriesById);
-router.post('/Stories', verifyToken, saveStories);
-router.patch('/Stories/:id', verifyToken, updateStories);
-router.delete('/Stories/:id', verifyToken, deleteStories);
+router.get('/Stories', getStories);
+router.get('/Stories/:id', getStoriesById);
+router.post('/Stories', saveStories);
+router.patch('/Stories/:id', updateStories);
+router.delete('/Stories/:id', deleteStories);
 
 //Wayang Content
-router.get('/Wayang', verifyToken, getWayang);
-router.get('/Wayang/:id', verifyToken, getWayangById);
-router.post('/Wayang', verifyToken, saveWayang);
-router.patch('/Wayang/:id', verifyToken, updateWayang);
-router.delete('/Wayang/:id', verifyToken, deleteWayang);
+router.get('/Wayang', getWayang);
+router.get('/Wayang/:id', getWayangById);
+router.post('/Wayang', saveWayang);
+router.patch('/Wayang/:id', updateWayang);
+router.delete('/Wayang/:id', deleteWayang);
 
 export default router;
