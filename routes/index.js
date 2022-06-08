@@ -10,36 +10,42 @@ import { getWayang, getWayangById, saveWayang, updateWayang, deleteWayang } from
 
 const router = express.Router();
 
+//AUTH Login Register
 router.get('/users', verifyToken, getUsers);
-router.post('/users', Register);
+router.post('/register', Register);
 router.post('/login', Login);
 router.get('/token', refreshToken);
 router.delete('/logout', Logout);
 
+//Article Content
 router.get('/Articles', verifyToken, getArticles);
 router.get('/Articles/:id', verifyToken, getArticlesById);
 router.post('/Articles', verifyToken, saveArticles);
 router.patch('/Articles/:id', verifyToken, updateArticles);
 router.delete('/Articles/:id', verifyToken, deleteArticles);
 
+//Dalang Biography Content
 router.get('/Dalang', verifyToken, getDalang);
 router.get('/Dalang/:id', verifyToken, getDalangById);
 router.post('/Dalang', verifyToken,saveDalang);
 router.patch('/Dalang/:id', verifyToken,updateDalang);
 router.delete('/Dalang/:id', verifyToken,deleteDalang);
 
+//Place Content
 router.get('/Places', verifyToken, getPlaces);
 router.get('/Places/:id', verifyToken, getPlacesById);
 router.post('/Places', savePlaces);
 router.patch('/Places/:id', updatePlaces);
 router.delete('/Places/:id', deletePlaces);
 
+//Stories of Puppet Content
 router.get('/Stories', verifyToken, getStories);
 router.get('/Stories/:id', verifyToken, getStoriesById);
 router.post('/Stories', verifyToken, saveStories);
 router.patch('/Stories/:id', verifyToken, updateStories);
 router.delete('/Stories/:id', verifyToken, deleteStories);
 
+//Wayang Content
 router.get('/Wayang', verifyToken, getWayang);
 router.get('/Wayang/:id', verifyToken, getWayangById);
 router.post('/Wayang', saveWayang);
