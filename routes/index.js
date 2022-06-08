@@ -1,5 +1,5 @@
 import express from "express";
-import { getUsers, Register, Login, Logout } from "../controller/Users.js";
+import { getToken, getUsers, Register, Login, Logout } from "../controller/Users.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controller/RefreshToken.js";
 import { getArticles, getArticlesById, saveArticles, updateArticles, deleteArticles  } from "../controller/ArticlesController.js";
@@ -10,7 +10,7 @@ import { getWayang, getWayangById, saveWayang, updateWayang, deleteWayang } from
 
 const router = express.Router();
 
-router.get('/users', verifyToken, getUsers);
+router.get('/users', verifyToken, getToken, getUsers);
 router.post('/users', Register);
 router.post('/login', Login);
 router.get('/token', refreshToken);
