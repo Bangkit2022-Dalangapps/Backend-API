@@ -6,7 +6,7 @@ const {DataTypes} = Sequelize;
 const Dalang = db.define('dalang',{
     name: DataTypes.STRING,
     image: DataTypes.STRING,
-    biography : DataTypes.TEXT,
+    biography : DataTypes.STRING,
     url: DataTypes.STRING
 },{
     freezeTableName: true
