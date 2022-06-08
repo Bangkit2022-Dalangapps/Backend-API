@@ -93,5 +93,7 @@ export const Logout = async(req, res) => {
             }
         });
         res.clearCookie('refreshtoken');
-        return res.sendStatus(200);
+        return res.status(200).json({
+            error: "false",
+            msg:"Berhasil Logout"});
 }
