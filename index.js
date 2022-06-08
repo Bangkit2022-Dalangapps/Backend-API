@@ -18,7 +18,7 @@ try {
     console.error(error);
 }
 
-app.use(cors({ credentials: true, origin:'http://localhost:3000'}));
+app.use(cors({credential: true, origin:'*'}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(FileUpload());
