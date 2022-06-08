@@ -34,9 +34,9 @@ router.delete('/Dalang/:id', verifyToken,deleteDalang);
 //Place Content
 router.get('/Places', verifyToken, getPlaces);
 router.get('/Places/:id', verifyToken, getPlacesById);
-router.post('/Places', savePlaces);
-router.patch('/Places/:id', updatePlaces);
-router.delete('/Places/:id', deletePlaces);
+router.post('/Places', verifyToken, savePlaces);
+router.patch('/Places/:id', verifyToken, updatePlaces);
+router.delete('/Places/:id', verifyToken, deletePlaces);
 
 //Stories of Puppet Content
 router.get('/Stories', verifyToken, getStories);
@@ -48,8 +48,8 @@ router.delete('/Stories/:id', verifyToken, deleteStories);
 //Wayang Content
 router.get('/Wayang', verifyToken, getWayang);
 router.get('/Wayang/:id', verifyToken, getWayangById);
-router.post('/Wayang', saveWayang);
-router.patch('/Wayang/:id', updateWayang);
-router.delete('/Wayang/:id', deleteWayang);
+router.post('/Wayang', verifyToken, saveWayang);
+router.patch('/Wayang/:id', verifyToken, updateWayang);
+router.delete('/Wayang/:id', verifyToken, deleteWayang);
 
 export default router;
