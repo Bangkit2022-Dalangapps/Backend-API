@@ -41,6 +41,7 @@ export const saveWayang = (req, res)=>{
 
     const name = req.body.name;
     const description = req.body.description;
+    const origin = req.body.origin;
     const file = req.files.file;
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
@@ -59,7 +60,7 @@ export const saveWayang = (req, res)=>{
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
-            await Wayang.create({name: name, image: fileName, description: description, url: url});
+            await Wayang.create({name: name, image: fileName, description: description, origin: origin, url: url});
             res.status(201).json({
                 error: "false",
                 msg: "Wayang Created Successfuly"});
@@ -112,7 +113,7 @@ export const updateWayang = async(req, res)=>{
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     
     try {
-        await Wayang.update({name: name, image: fileName, description: description, url: url},{
+        await Wayang.update({name: name, image: fileName, description: description, origin: origin, url: url},{
             where:{
                 id: req.params.id
             }

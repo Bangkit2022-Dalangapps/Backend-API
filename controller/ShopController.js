@@ -1,10 +1,10 @@
-import Dalang from "../models/DalangModel.js";
+import Shop from "../models/ShopModel.js";
 import path from "path";
 import fs from "fs";
 
-export const getDalang = async(req, res)=>{
+export const getShop = async(req, res)=>{
     try {
-        const response = await Dalang.findAll();
+        const response = await Shop.findAll();
         res.status(200).json({
             error: "false",
             msg : "Success",
@@ -15,9 +15,9 @@ export const getDalang = async(req, res)=>{
     }
 }
 
-export const getDalangById = async(req, res)=>{
+export const getShopById = async(req, res)=>{
     try {
-        const response = await Dalang.findOne({
+        const response = await Shop.findOne({
             where:{
                 id : req.params.id
             }
@@ -32,14 +32,14 @@ export const getDalangById = async(req, res)=>{
     }
 }
 
-export const saveDalang = (req, res)=>{
+export const saveShop = (req, res)=>{
     if(req.files === null) return res.status(400).json({
         error: "true",
-        msg: "No Dalang Uploaded"});
+        msg: "No Shop Uploaded"});
 
     const name = req.body.name;
-    const biography = req.body.biography;
-    const origin = req.body.origin;
+    const description = req.body.description;
+    const location = req.body.location;
     const file = req.files.file;
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
@@ -58,10 +58,10 @@ export const saveDalang = (req, res)=>{
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
-            await Dalang.create({name: name, image: fileName, biography: biography, origin: origin, url: url});
+            await Dalang.create({name: name, image: fileName, description: description, location: location, url: url});
             res.status(201).json({
                 error: "false",
-                msg: "Dalang Created Successfuly"});
+                msg: "Shop Created Successfuly"});
         } catch (error) {
             console.log(error.message);
         }
@@ -69,20 +69,20 @@ export const saveDalang = (req, res)=>{
 
 }
 
-export const updateDalang = async(req, res)=>{
-    const dalang = await Dalang.findOne({
+export const updateShop = async(req, res)=>{
+    const shop = await Shop.findOne({
         where:{
             id : req.params.id
         }
     });
 
-    if(!dalang) return res.status(404).json({
+    if(!shop) return res.status(404).json({
         error: "true",
-        msg: "No Dalang Found"});
+        msg: "No Shop Found"});
     
     let fileName = "";
     if(req.files === null){
-        fileName = dalang.image;
+        fileName = shop.image;
     }else{
         const file = req.files.file;
         const fileSize = file.data.length;
@@ -98,7 +98,7 @@ export const updateDalang = async(req, res)=>{
             error: "true",
             msg: "Image must be less than 5 MB"});
 
-        const filepath = `./public/images/${dalang.image}`;
+        const filepath = `./public/images/${shop.image}`;
         fs.unlinkSync(filepath);
 
         file.mv(`./public/images/${fileName}`, (err)=>{
@@ -111,41 +111,41 @@ export const updateDalang = async(req, res)=>{
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     
     try {
-        await Dalang.update({name: name, image: fileName, biography: biography, origin: origin, url: url},{
+        await Shop.update({name: name, image: fileName, description: description, location: location, url: url},{
             where:{
                 id: req.params.id
             }
         });
         res.status(200).json({
             error: "false",
-            msg: "Dalang Updated Successfuly"});
+            msg: "Shop Updated Successfuly"});
     } catch (error) {
         console.log(error.message);
     }
 }
 
-export const deleteDalang = async(req, res)=>{
-    const dalang = await Dalang.findOne({
+export const deleteShop = async(req, res)=>{
+    const shop = await Shop.findOne({
         where:{
             id : req.params.id
         }
     });
 
-    if(!dalang) return res.status(404).json({
+    if(!shop) return res.status(404).json({
         error: "true",
-        msg: "No Dalang Found"});
+        msg: "No Shop Found"});
 
     try {
         const filepath = `./public/images/${dalang.image}`;
         fs.unlinkSync(filepath);
-        await Dalang.destroy({
+        await Shop.destroy({
             where:{
                 id : req.params.id
             }
         });
         res.status(200).json({
             error: "false",
-            msg: "Dalang Deleted Successfuly"});
+            msg: "Shop Deleted Successfuly"});
     } catch (error) {
         console.log(error.message);
     }

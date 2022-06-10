@@ -7,6 +7,7 @@ const Dalang = db.define('dalang',{
     name: DataTypes.STRING,
     image: DataTypes.STRING,
     biography : DataTypes.STRING,
+    origin : DataTypes.STRING,
     url: DataTypes.STRING
 },{
     freezeTableName: true

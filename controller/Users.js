@@ -50,10 +50,10 @@ export const Login = async(req, res) => {
         const name = user[0].name;
         const email = user[0].email;
         const accessToken = jwt.sign({userId, name, email}, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: '1d'
+            expiresIn: '10d'
         });
         const refreshToken = jwt.sign({userId, name, email}, process.env.REFRESH_TOKEN_SECRET, {
-            expiresIn: '1d'
+            expiresIn: '10d'
         });
         await Users.update({refresh_token: refreshToken},{
             where:{
@@ -62,7 +62,7 @@ export const Login = async(req, res) => {
         });
         res.cookie('refreshToken', refreshToken,{
             httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000
+            maxAge: 10 * 24 * 60 * 60 * 1000
         });
         res.status(200).json({
             error: "false",

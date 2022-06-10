@@ -6,6 +6,7 @@ import { getArticles, getArticlesById, saveArticles, updateArticles, deleteArtic
 import { getDalang, getDalangById, saveDalang, updateDalang, deleteDalang } from "../controller/DalangController.js";
 import { getPlaces, getPlacesById, savePlaces, updatePlaces, deletePlaces } from "../controller/PlacesController.js";
 import { getStories, getStoriesById, saveStories, updateStories, deleteStories  } from "../controller/PSController.js";
+import { getShop, getShopById, saveShop, updateShop, deleteShop  } from "../controller/ShopController.js";
 import { getWayang, getWayangById, saveWayang, updateWayang, deleteWayang } from "../controller/WayangController.js";
 
 const router = express.Router();
@@ -18,36 +19,43 @@ router.get('/token', refreshToken);
 router.delete('/logout', Logout);
 
 //Article Content
-router.get('/Articles', getArticles);
-router.get('/Articles/:id', getArticlesById);
+router.get('/Articles', verifyToken, getArticles);
+router.get('/Articles/:id', verifyToken, getArticlesById);
 router.post('/Articles', saveArticles);
 router.patch('/Articles/:id', updateArticles);
 router.delete('/Articles/:id', deleteArticles);
 
 //Dalang Biography Content
-router.get('/Dalang', getDalang);
-router.get('/Dalang/:id', getDalangById);
+router.get('/Dalang', verifyToken, getDalang);
+router.get('/Dalang/:id', verifyToken, getDalangById);
 router.post('/Dalang', saveDalang);
 router.patch('/Dalang/:id', updateDalang);
 router.delete('/Dalang/:id', deleteDalang);
 
 //Place Content
-router.get('/Places', getPlaces);
-router.get('/Places/:id', getPlacesById);
+router.get('/Places', verifyToken, getPlaces);
+router.get('/Places/:id', verifyToken, getPlacesById);
 router.post('/Places', savePlaces);
 router.patch('/Places/:id', updatePlaces);
 router.delete('/Places/:id', deletePlaces);
 
 //Stories of Puppet Content
-router.get('/Stories', getStories);
-router.get('/Stories/:id', getStoriesById);
+router.get('/Stories', verifyToken, getStories);
+router.get('/Stories/:id', verifyToken, getStoriesById);
 router.post('/Stories', saveStories);
 router.patch('/Stories/:id', updateStories);
 router.delete('/Stories/:id', deleteStories);
 
+//Shop Content
+router.get('/Shop', verifyToken, getShop);
+router.get('/Shop/:id', verifyToken, getShopById);
+router.post('/Shop', saveShop);
+router.patch('/Shop/:id', updateShop);
+router.delete('/Shop/:id', deleteShop);
+
 //Wayang Content
-router.get('/Wayang', getWayang);
-router.get('/Wayang/:id', getWayangById);
+router.get('/Wayang', verifyToken, getWayang);
+router.get('/Wayang/:id', verifyToken, getWayangById);
 router.post('/Wayang', saveWayang);
 router.patch('/Wayang/:id', updateWayang);
 router.delete('/Wayang/:id', deleteWayang);
