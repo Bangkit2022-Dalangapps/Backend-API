@@ -3,7 +3,7 @@ import db from "../config/Database.js";
 
 const {DataTypes} = Sequelize;
 
-const Wayang = db.define('wayang',{
+const Wayangs = db.define('wayangs',{
     name: DataTypes.STRING,
     image: DataTypes.STRING,
     description : DataTypes.STRING,
@@ -14,7 +14,7 @@ const Wayang = db.define('wayang',{
     freezeTableName: true
 });
 
-export default Wayang;
+export default Wayangs;
 
 (async()=>{
     await db.sync();

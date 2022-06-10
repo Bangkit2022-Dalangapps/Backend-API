@@ -1,10 +1,10 @@
-import Wayang from "../models/WayangModel.js";
+import Wayangs from "../models/WayangsModel.js";
 import path from "path";
 import fs from "fs";
 
-export const getWayang = async(req, res)=>{
+export const getWayangs = async(req, res)=>{
     try {
-        const response = await Wayang.findAll();
+        const response = await Wayangs.findAll();
         res.status(200).json({
             error: "false",
             msg : "Success",
@@ -15,9 +15,9 @@ export const getWayang = async(req, res)=>{
     }
 }
 
-export const getWayangById = async(req, res)=>{
+export const getWayangsById = async(req, res)=>{
     try {
-        const response = await Wayang.findOne({
+        const response = await Wayangs.findOne({
             where:{
                 id : req.params.id
             }
@@ -34,7 +34,7 @@ export const getWayangById = async(req, res)=>{
     }
 }
 
-export const saveWayang = (req, res)=>{
+export const saveWayangs = (req, res)=>{
     if(req.files === null) return res.status(400).json({
         error: "true",
         msg: "No Wayang Uploaded"});
@@ -61,7 +61,7 @@ export const saveWayang = (req, res)=>{
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
-            await Wayang.create({name: name, image: fileName, description: description, origin: origin, source: source, url: url});
+            await Wayangs.create({name: name, image: fileName, description: description, origin: origin, source: source, url: url});
             res.status(201).json({
                 error: "false",
                 msg: "Wayang Created Successfuly"});
@@ -72,20 +72,20 @@ export const saveWayang = (req, res)=>{
 
 }
 
-export const updateWayang = async(req, res)=>{
-    const wayang = await Wayang.findOne({
+export const updateWayangs = async(req, res)=>{
+    const wayangs = await Wayangs.findOne({
         where:{
             id : req.params.id
         }
     });
 
-    if(!wayang) return res.status(404).json({
+    if(!wayangs) return res.status(404).json({
         error: "true",
         msg: "No Wayang Found"});
     
     let fileName = "";
     if(req.files === null){
-        fileName = wayang.image;
+        fileName = wayangs.image;
     }else{
         const file = req.files.file;
         const fileSize = file.data.length;
@@ -101,7 +101,7 @@ export const updateWayang = async(req, res)=>{
             error: "true",
             msg: "Image must be less than 5 MB"});
 
-        const filepath = `./public/images/${wayang.image}`;
+        const filepath = `./public/images/${wayangs.image}`;
         fs.unlinkSync(filepath);
 
         file.mv(`./public/images/${fileName}`, (err)=>{
@@ -127,20 +127,20 @@ export const updateWayang = async(req, res)=>{
     }
 }
 
-export const deleteWayang = async(req, res)=>{
-    const wayang = await Wayang.findOne({
+export const deleteWayangs = async(req, res)=>{
+    const wayangs = await Wayangs.findOne({
         where:{
             id : req.params.id
         }
     });
-    if(!wayang) return res.status(404).json({
+    if(!wayangs) return res.status(404).json({
         error: "true",
         msg: "No Wayang Found"});
 
     try {
-        const filepath = `./public/images/${wayang.image}`;
+        const filepath = `./public/images/${wayangs.image}`;
         fs.unlinkSync(filepath);
-        await Wayang.destroy({
+        await Wayangs.destroy({
             where:{
                 id : req.params.id
             }

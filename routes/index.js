@@ -7,7 +7,7 @@ import { getDalang, getDalangById, saveDalang, updateDalang, deleteDalang } from
 import { getPlaces, getPlacesById, savePlaces, updatePlaces, deletePlaces } from "../controller/PlacesController.js";
 import { getStories, getStoriesById, saveStories, updateStories, deleteStories  } from "../controller/PSController.js";
 import { getShop, getShopById, saveShop, updateShop, deleteShop  } from "../controller/ShopController.js";
-import { getWayang, getWayangById, saveWayang, updateWayang, deleteWayang } from "../controller/WayangController.js";
+import { getWayangs, getWayangsById, saveWayangs, updateWayangs, deleteWayangs } from "../controller/WayangsController.js";
 
 const router = express.Router();
 
@@ -54,10 +54,10 @@ router.patch('/Shop/:id', updateShop);
 router.delete('/Shop/:id', deleteShop);
 
 //Wayang Content
-router.get('/Wayang', verifyToken, getWayang);
-router.get('/Wayang/:id', verifyToken, getWayangById);
-router.post('/Wayang', saveWayang);
-router.patch('/Wayang/:id', updateWayang);
-router.delete('/Wayang/:id', deleteWayang);
+router.get('/Wayangs', verifyToken, getWayangs);
+router.get('/Wayangs/:id', verifyToken, getWayangsById);
+router.post('/Wayangs', saveWayangs);
+router.patch('/Wayangs/:id', updateWayangs);
+router.delete('/Wayangs/:id', deleteWayangs);
 
 export default router;
