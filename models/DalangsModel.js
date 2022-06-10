@@ -8,6 +8,7 @@ const Dalangs = db.define('dalangs',{
     image: DataTypes.STRING,
     biography : DataTypes.STRING,
     origin : DataTypes.STRING,
+    source : DataTypes.STRING,
     url: DataTypes.STRING
 },{
     freezeTableName: true

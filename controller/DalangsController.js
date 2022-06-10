@@ -40,6 +40,7 @@ export const saveDalangs = (req, res)=>{
     const name = req.body.name;
     const biography = req.body.biography;
     const origin = req.body.origin;
+    const source = req.body.source;
     const file = req.files.file;
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
@@ -58,7 +59,7 @@ export const saveDalangs = (req, res)=>{
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
-            await Dalangs.create({name: name, image: fileName, biography: biography, origin: origin, url: url});
+            await Dalangs.create({name: name, image: fileName, biography: biography, origin: origin, source: source, url: url});
             res.status(201).json({
                 error: "false",
                 msg: "Dalang Created Successfuly"});
@@ -111,7 +112,7 @@ export const updateDalangs = async(req, res)=>{
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     
     try {
-        await Dalangs.update({name: name, image: fileName, biography: biography, origin: origin, url: url},{
+        await Dalangs.update({name: name, image: fileName, biography: biography, origin: origin, source: source, url: url},{
             where:{
                 id: req.params.id
             }
