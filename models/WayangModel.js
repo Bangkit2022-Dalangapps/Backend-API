@@ -8,6 +8,7 @@ const Wayang = db.define('wayang',{
     image: DataTypes.STRING,
     description : DataTypes.STRING,
     origin : DataTypes.STRING,
+    source : DataTypes.STRING,
     url: DataTypes.STRING
 },{
     freezeTableName: true
