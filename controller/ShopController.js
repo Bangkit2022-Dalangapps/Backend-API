@@ -39,12 +39,12 @@ export const saveShop = (req, res)=>{
 
     const name = req.body.name;
     const description = req.body.description;
-    const location = req.body.location;
+    const linkUrl = req.body.linkUrl;
     const file = req.files.file;
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
     const fileName = file.md5 + ext;
-    const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+    const photoUrl = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     const allowedType = ['.png','.jpg','.jpeg'];
 
     if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({
@@ -58,7 +58,7 @@ export const saveShop = (req, res)=>{
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
-            await Dalang.create({name: name, image: fileName, description: description, location: location, url: url});
+            await Shop.create({name: name, image: fileName, description: description, linkUrl: linkUrl, photoUrl: photoUrl});
             res.status(201).json({
                 error: "false",
                 msg: "Shop Created Successfuly"});
@@ -108,10 +108,10 @@ export const updateShop = async(req, res)=>{
         });
     }
     const name = req.body.name;
-    const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+    const photoUrl = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     
     try {
-        await Shop.update({name: name, image: fileName, description: description, location: location, url: url},{
+        await Shop.update({name: name, image: fileName, description: description, linkUrl: linkUrl, photoUrl: photoUrl},{
             where:{
                 id: req.params.id
             }
@@ -136,7 +136,7 @@ export const deleteShop = async(req, res)=>{
         msg: "No Shop Found"});
 
     try {
-        const filepath = `./public/images/${dalang.image}`;
+        const filepath = `./public/images/${shop.image}`;
         fs.unlinkSync(filepath);
         await Shop.destroy({
             where:{

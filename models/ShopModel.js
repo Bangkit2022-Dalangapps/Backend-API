@@ -7,8 +7,8 @@ const Shop = db.define('shop',{
     name: DataTypes.STRING,
     image: DataTypes.STRING,
     description : DataTypes.STRING,
-    location : DataTypes.STRING,
-    url: DataTypes.STRING
+    linkUrl : DataTypes.STRING,
+    photoUrl: DataTypes.STRING
 },{
     freezeTableName: true
 });
