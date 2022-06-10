@@ -1,10 +1,10 @@
-import Dalang from "../models/DalangModel.js";
+import Dalangs from "../models/DalangsModel.js";
 import path from "path";
 import fs from "fs";
 
-export const getDalang = async(req, res)=>{
+export const getDalangs = async(req, res)=>{
     try {
-        const response = await Dalang.findAll();
+        const response = await Dalangs.findAll();
         res.status(200).json({
             error: "false",
             msg : "Success",
@@ -15,9 +15,9 @@ export const getDalang = async(req, res)=>{
     }
 }
 
-export const getDalangById = async(req, res)=>{
+export const getDalangsById = async(req, res)=>{
     try {
-        const response = await Dalang.findOne({
+        const response = await Dalangs.findOne({
             where:{
                 id : req.params.id
             }
@@ -32,7 +32,7 @@ export const getDalangById = async(req, res)=>{
     }
 }
 
-export const saveDalang = (req, res)=>{
+export const saveDalangs = (req, res)=>{
     if(req.files === null) return res.status(400).json({
         error: "true",
         msg: "No Dalang Uploaded"});
@@ -58,7 +58,7 @@ export const saveDalang = (req, res)=>{
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
-            await Dalang.create({name: name, image: fileName, biography: biography, origin: origin, url: url});
+            await Dalangs.create({name: name, image: fileName, biography: biography, origin: origin, url: url});
             res.status(201).json({
                 error: "false",
                 msg: "Dalang Created Successfuly"});
@@ -69,8 +69,8 @@ export const saveDalang = (req, res)=>{
 
 }
 
-export const updateDalang = async(req, res)=>{
-    const dalang = await Dalang.findOne({
+export const updateDalangs = async(req, res)=>{
+    const dalangs = await Dalangs.findOne({
         where:{
             id : req.params.id
         }
@@ -82,7 +82,7 @@ export const updateDalang = async(req, res)=>{
     
     let fileName = "";
     if(req.files === null){
-        fileName = dalang.image;
+        fileName = dalangs.image;
     }else{
         const file = req.files.file;
         const fileSize = file.data.length;
@@ -98,7 +98,7 @@ export const updateDalang = async(req, res)=>{
             error: "true",
             msg: "Image must be less than 5 MB"});
 
-        const filepath = `./public/images/${dalang.image}`;
+        const filepath = `./public/images/${dalangs.image}`;
         fs.unlinkSync(filepath);
 
         file.mv(`./public/images/${fileName}`, (err)=>{
@@ -111,7 +111,7 @@ export const updateDalang = async(req, res)=>{
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     
     try {
-        await Dalang.update({name: name, image: fileName, biography: biography, origin: origin, url: url},{
+        await Dalangs.update({name: name, image: fileName, biography: biography, origin: origin, url: url},{
             where:{
                 id: req.params.id
             }
@@ -124,21 +124,21 @@ export const updateDalang = async(req, res)=>{
     }
 }
 
-export const deleteDalang = async(req, res)=>{
-    const dalang = await Dalang.findOne({
+export const deleteDalangs = async(req, res)=>{
+    const dalangs = await Dalangs.findOne({
         where:{
             id : req.params.id
         }
     });
 
-    if(!dalang) return res.status(404).json({
+    if(!dalangs) return res.status(404).json({
         error: "true",
         msg: "No Dalang Found"});
 
     try {
-        const filepath = `./public/images/${dalang.image}`;
+        const filepath = `./public/images/${dalangs.image}`;
         fs.unlinkSync(filepath);
-        await Dalang.destroy({
+        await Dalangs.destroy({
             where:{
                 id : req.params.id
             }

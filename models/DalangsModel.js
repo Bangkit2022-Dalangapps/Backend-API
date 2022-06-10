@@ -3,7 +3,7 @@ import db from "../config/Database.js";
 
 const {DataTypes} = Sequelize;
 
-const Dalang = db.define('dalang',{
+const Dalangs = db.define('dalangs',{
     name: DataTypes.STRING,
     image: DataTypes.STRING,
     biography : DataTypes.STRING,
@@ -13,7 +13,7 @@ const Dalang = db.define('dalang',{
     freezeTableName: true
 });
 
-export default Dalang;
+export default Dalangs;
 
 (async()=>{
     await db.sync();

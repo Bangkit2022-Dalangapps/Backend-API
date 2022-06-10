@@ -3,7 +3,7 @@ import { getUsers, Register, Login, Logout } from "../controller/Users.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controller/RefreshToken.js";
 import { getArticles, getArticlesById, saveArticles, updateArticles, deleteArticles  } from "../controller/ArticlesController.js";
-import { getDalang, getDalangById, saveDalang, updateDalang, deleteDalang } from "../controller/DalangController.js";
+import { getDalangs, getDalangsById, saveDalangs, updateDalangs, deleteDalangs } from "../controller/DalangsController.js";
 import { getPlaces, getPlacesById, savePlaces, updatePlaces, deletePlaces } from "../controller/PlacesController.js";
 import { getStories, getStoriesById, saveStories, updateStories, deleteStories  } from "../controller/PSController.js";
 import { getShop, getShopById, saveShop, updateShop, deleteShop  } from "../controller/ShopController.js";
@@ -26,11 +26,11 @@ router.patch('/Articles/:id', updateArticles);
 router.delete('/Articles/:id', deleteArticles);
 
 //Dalang Biography Content
-router.get('/Dalang', verifyToken, getDalang);
-router.get('/Dalang/:id', verifyToken, getDalangById);
-router.post('/Dalang', saveDalang);
-router.patch('/Dalang/:id', updateDalang);
-router.delete('/Dalang/:id', deleteDalang);
+router.get('/Dalangs', verifyToken, getDalangs);
+router.get('/Dalangs/:id', verifyToken, getDalangsById);
+router.post('/Dalangs', saveDalangs);
+router.patch('/Dalangs/:id', updateDalangs);
+router.delete('/Dalangs/:id', deleteDalangs);
 
 //Place Content
 router.get('/Places', verifyToken, getPlaces);
