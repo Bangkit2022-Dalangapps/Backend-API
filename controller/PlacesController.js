@@ -39,6 +39,7 @@ export const savePlaces = (req, res)=>{
 
     const name = req.body.name;
     const description = req.body.description;
+    const location = req.body.location;
     const file = req.files.file;
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
@@ -57,7 +58,7 @@ export const savePlaces = (req, res)=>{
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
-            await Places.create({name: name, image: fileName, description: description, url: url});
+            await Places.create({name: name, image: fileName, description: description, location: location, url: url});
             res.status(201).json({
                 error: "false",
                 msg: "Place Created Successfuly"});
@@ -108,7 +109,7 @@ export const updatePlaces = async(req, res)=>{
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     
     try {
-        await Places.update({name: name, image: fileName, description: description, url: url},{
+        await Places.update({name: name, image: fileName, description: description, location: location, url: url},{
             where:{
                 id: req.params.id
             }
