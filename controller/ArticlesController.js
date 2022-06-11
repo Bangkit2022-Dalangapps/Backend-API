@@ -39,6 +39,7 @@ export const saveArticles = (req, res)=>{
 
     const title = req.body.title;
     const description = req.body.description;
+    const source = req.body.source;
     const file = req.files.file;
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
@@ -57,7 +58,7 @@ export const saveArticles = (req, res)=>{
     file.mv(`./public/images/${fileName}`, async(err)=>{
         if(err) return res.status(500).json({msg: err.message});
         try {
-            await Articles.create({title: title, image: fileName, description: description, url: url});
+            await Articles.create({title: title, image: fileName, description: description, source: source, url: url});
             res.status(201).json({
                 error: "false",
                 msg: "Article Created Successfuly"});
@@ -108,7 +109,7 @@ export const updateArticles = async(req, res)=>{
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     
     try {
-        await Articles.update({title: title, image: fileName, description: description, url: url},{
+        await Articles.update({title: title, image: fileName, description: description, source: source, url: url},{
             where:{
                 id: req.params.id
             }

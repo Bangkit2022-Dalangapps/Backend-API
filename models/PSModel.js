@@ -7,6 +7,7 @@ const Stories = db.define('story',{
     title: DataTypes.STRING,
     image: DataTypes.STRING,
     description : DataTypes.STRING,
+    source : DataTypes.STRING,
     url: DataTypes.STRING
 },{
     freezeTableName: true

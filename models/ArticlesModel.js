@@ -7,6 +7,7 @@ const Articles = db.define('article',{
     title: DataTypes.STRING,
     image: DataTypes.STRING,
     description : DataTypes.STRING,
+    source : DataTypes.STRING,
     url: DataTypes.STRING
 },{
     freezeTableName: true
