@@ -17,8 +17,10 @@ Culture is an invaluable heritage of our ancestors. Culture is also a national i
 * MySql
 * Dbeaver
 * Google Compute Engine (for creating VM instance)
+* Postman
 
 # Documentation
 1. Create API using Javascript language at Visual Studio Code
 2. Create Database content and user using MySql and Dbeaver
 3. Create VM instance in Google Compute Engine to get IP for endpoint API
+4. Upload content using Postman to Database
