@@ -1,6 +1,6 @@
 # Backend-API for Dalang App
 
-This project is a Product Capstone submission from the C22-PS012 group for SIndependentenden Kampus Merdeka of Bangkit 2022. Contributors of this project are:
+This project is a Product Capstone submission from the C22-PS012 group for Studi Independen Kampus Merdeka of Bangkit 2022. Contributors of this project are:
 1.	Muhammad Gibran Fadilla (M2002G0076) - Machine Learning
 2.	Muhammad Faisal Anshory (M2002G0077) - Machine Learning
 3.	Dzalfikri Ali Zidan (A2009G0963) - Mobile Development
